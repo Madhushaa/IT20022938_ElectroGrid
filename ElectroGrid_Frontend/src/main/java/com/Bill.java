@@ -2,6 +2,7 @@ package com;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -70,6 +71,7 @@ public class Bill {
 	 output += "<td>" + power_consumption + "</td>";
 	 output += "<td>" +"Rs." + total_amount + "</td>";
 	 output += "<td>" + date + "</td>";
+	 
 	 // buttons
 	 output += "<td><input name='btnUpdate' type='button' value='Update' "
 			 + "class='btnUpdate btn btn-secondary' data-bill_id='" + bill_id + "'></td>"
@@ -89,6 +91,49 @@ public class Bill {
 	 } 
 	return output; 
 	}
+	
+	
+	public String insertBill(String acc_number, String name, String month, String power_consumption, String total_amount, String date){ 
+		
+		String output = ""; 
+		
+		try
+		{ 
+			Connection con = connect(); 
+			
+			if (con == null) 
+			{
+				return "Error while connecting to the database for inserting."; 
+				
+			} 
+			// create a prepared statement
+			
+			String query = " insert into bills (`bill_id`,`acc_number`,`name`,`month`,`power_consumption`,`total_amount`,`date`)"+" values (?, ?, ?, ?, ?,?,?)"; 
+			PreparedStatement preparedStmt = con.prepareStatement(query); 
+			// binding values
+			preparedStmt.setInt(1, 0); 
+			preparedStmt.setString(2, acc_number); 
+			preparedStmt.setString(3, name); 
+			preparedStmt.setString(4, month ); 
+			preparedStmt.setString(5, power_consumption); 
+			preparedStmt.setDouble(6, Double.parseDouble(total_amount)); 
+			preparedStmt.setString(7, date); 
+			// execute the statement
+
+			preparedStmt.execute(); 
+			con.close(); 
+			
+			String newBills = readBills(); 
+			output = "{\"status\":\"success\",\"data\":\""+newBills+"\"}"; 
+		} 
+		
+		catch (Exception e) 
+		{ 
+			output = "{\"status\":\"error\", \"data\":\"Error while inserting the Bill.\"}"; 
+			System.err.println(e.getMessage()); 
+		} 
+		return output; 
+}
 
 
 }
