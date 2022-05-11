@@ -38,6 +38,7 @@ public class Bill {
 	 { 
 	 return "Error while connecting to the database for reading."; 
 	 } 
+	 
 	 // Prepare the html table to be displayed
 	 output = "<table border=\"1\" class=\"table\"><tr><th>Bill ID</th>"
 	 		+ "<th>Account Number</th><th>Name</th>"
@@ -79,7 +80,8 @@ public class Bill {
 			 + "class='btnRemove btn btn-danger' data-bill_id='" + bill_id + "'></td></tr>"; 
 	 
 	 } 
-	 con.close(); 
+	 con.close();
+	 
 	 // Complete the html table
 	 output += "</table>"; 
 	 } 
@@ -106,10 +108,11 @@ public class Bill {
 				return "Error while connecting to the database for inserting."; 
 				
 			} 
-			// create a prepared statement
 			
+			// create a prepared statement
 			String query = " insert into bills (`bill_id`,`acc_number`,`name`,`month`,`power_consumption`,`total_amount`,`date`)"+" values (?, ?, ?, ?, ?,?,?)"; 
 			PreparedStatement preparedStmt = con.prepareStatement(query); 
+			
 			// binding values
 			preparedStmt.setInt(1, 0); 
 			preparedStmt.setString(2, acc_number); 
@@ -118,8 +121,8 @@ public class Bill {
 			preparedStmt.setString(5, power_consumption); 
 			preparedStmt.setDouble(6, Double.parseDouble(total_amount)); 
 			preparedStmt.setString(7, date); 
+			
 			// execute the statement
-
 			preparedStmt.execute(); 
 			con.close(); 
 			
@@ -132,6 +135,46 @@ public class Bill {
 			output = "{\"status\":\"error\", \"data\":\"Error while inserting the Bill.\"}"; 
 			System.err.println(e.getMessage()); 
 		} 
+		return output; 
+	}
+	
+	
+	public String updateBill(String bill_id, String acc_number, String name, String month, String power_consumption,String total_amount, String date ){ 
+		
+		String output = ""; 
+		
+		try{ 
+				Connection con = connect(); 
+				if (con == null){
+					return "Error while connecting to the database for updating.";
+				} 
+				
+				// create a prepared statement
+				String query = "UPDATE bills SET acc_number=?,name=?,month=?,power_consumption=? ,total_amount=? ,date=?  WHERE bill_id=?"; 
+				PreparedStatement preparedStmt = con.prepareStatement(query); 
+				
+				// binding values
+				preparedStmt.setString(1, acc_number); 
+				preparedStmt.setString(2, name); 
+				preparedStmt.setString(3, month); 
+				preparedStmt.setString(4, power_consumption);
+				preparedStmt.setDouble(5, Double.parseDouble(total_amount));
+				preparedStmt.setString(6, date);
+				preparedStmt.setInt(7, Integer.parseInt(bill_id)); 
+				
+				// execute the statement
+				preparedStmt.execute(); 
+				con.close(); 
+				String newBills = readBills(); 
+				output = "{\"status\":\"success\",\"data\":\""+newBills+"\"}"; 
+
+		}catch (Exception e){ 
+			
+			output = "{\"status\":\"error\",\"data\":\"Error while updating the item.\"}"; 
+			System.err.println(e.getMessage()); 
+			
+		} 
+		
 		return output; 
 }
 
