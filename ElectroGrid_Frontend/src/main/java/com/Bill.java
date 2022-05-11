@@ -2,6 +2,8 @@ package com;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Bill {
 	
@@ -13,7 +15,7 @@ public class Bill {
 		try{ 
 				Class.forName("com.mysql.cj.jdbc.Driver"); 
 
-				//Provide the correct details: DBServer/DBName, username, password 
+				//DBServer/DBName, user name, password 
 				con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/electrogrid_bill", "root", ""); 
 		} 
 		catch (Exception e) {
@@ -21,6 +23,72 @@ public class Bill {
 			} 
 		
 		return con; 
-}
+	}
+	
+	
+	//readBill method to View All bills
+	public String readBills() 
+	{ 
+		String output = ""; 
+		try
+		{ 
+			Connection con = connect(); 
+	 if (con == null) 
+	 { 
+	 return "Error while connecting to the database for reading."; 
+	 } 
+	 // Prepare the html table to be displayed
+	 output = "<table border=\"1\" class=\"table\"><tr><th>Bill ID</th>"
+	 		+ "<th>Account Number</th><th>Name</th>"
+	 		+ "<th>month</th>" 
+	 		+ "<th>power consumption</th>"
+	 		+ "<th>Total Amount</th>"
+	 		+ "<th>Date</th>"
+	 		+ "<th>Update</th>"
+	 		+ "<th>Remove</th></tr>"; 
+	
+	 String query = "select * from bills"; 
+	 Statement stmt = con.createStatement(); 
+	 ResultSet rs = stmt.executeQuery(query); 
+	 
+	 // iterate through the rows in the result set
+	 while (rs.next()) 
+	 { 
+	 String bill_id = Integer.toString(rs.getInt("bill_id")); 
+	 String acc_number = rs.getString("acc_number"); 
+	 String name = rs.getString("name"); 
+	 String month = rs.getString("month"); 
+	 String power_consumption = Double.toString(rs.getDouble("power_consumption")); 
+	 String total_amount = Double.toString(rs.getDouble("total_amount")); 
+	 String date = rs.getString("date"); 
+	 
+	 // Add into the html table
+	 output += "<tr><td>"+bill_id+"</td>"; 
+	 output += "<td>" + acc_number + "</td>"; 
+	 output += "<td>" + name + "</td>"; 
+	 output += "<td>" + month + "</td>"; 
+	 output += "<td>" + power_consumption + "</td>";
+	 output += "<td>" +"Rs." + total_amount + "</td>";
+	 output += "<td>" + date + "</td>";
+	 // buttons
+	 output += "<td><input name='btnUpdate' type='button' value='Update' "
+			 + "class='btnUpdate btn btn-secondary' data-bill_id='" + bill_id + "'></td>"
+			 + "<td><input name='btnRemove' type='button' value='Remove' "
+			 + "class='btnRemove btn btn-danger' data-bill_id='" + bill_id + "'></td></tr>"; 
+	 
+	 } 
+	 con.close(); 
+	 // Complete the html table
+	 output += "</table>"; 
+	 } 
+	 
+	catch (Exception e) 
+	 { 
+	 output = "Error while reading the Bills."; 
+	 System.err.println(e.getMessage()); 
+	 } 
+	return output; 
+	}
+
 
 }
