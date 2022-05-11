@@ -124,6 +124,7 @@ public class Bill {
 			
 			// execute the statement
 			preparedStmt.execute(); 
+			
 			con.close(); 
 			
 			String newBills = readBills(); 
@@ -139,6 +140,8 @@ public class Bill {
 	}
 	
 	
+	
+	//updateBill function for update bills
 	public String updateBill(String bill_id, String acc_number, String name, String month, String power_consumption,String total_amount, String date ){ 
 		
 		String output = ""; 
@@ -164,7 +167,9 @@ public class Bill {
 				
 				// execute the statement
 				preparedStmt.execute(); 
+				
 				con.close(); 
+				
 				String newBills = readBills(); 
 				output = "{\"status\":\"success\",\"data\":\""+newBills+"\"}"; 
 
@@ -175,6 +180,41 @@ public class Bill {
 			
 		} 
 		
+		return output; 
+	}
+	
+	
+	//deleteItem function for delete bills
+	public String deleteItem(String bill_id){ 
+		
+		String output = ""; 
+		
+		try{ 
+			Connection con = connect(); 
+			
+			if (con == null){
+				return "Error while connecting to the database for deleting."; 
+			} 
+			
+			// create a prepared statement
+			String query = "delete from bills where bill_id=?"; 
+			PreparedStatement preparedStmt = con.prepareStatement(query); 
+			
+			// binding values
+			preparedStmt.setInt(1, Integer.parseInt(bill_id)); 
+			
+			// execute the statement
+			preparedStmt.execute(); 
+			
+			con.close(); 
+			
+			String newBills = readBills(); 
+			output = "{\"status\":\"success\",\"data\":\""+newBills+"\"}"; 
+
+		}catch (Exception e){ 
+			output = "{\"status\":\"error\",\"data\":\"Error while deleting the Bill.\"}";
+			System.err.println(e.getMessage()); 
+		} 
 		return output; 
 }
 
