@@ -40,7 +40,8 @@ public class Bill {
 	 } 
 	 
 	 // Prepare the html table to be displayed
-	 output = "<table border=\"1\" class=\"table\"><tr><th>Bill ID</th>"
+	 output = "<table border='1' class='table'>"
+	 		+ "<tr><th>Bill ID</th>"
 	 		+ "<th>Account Number</th><th>Name</th>"
 	 		+ "<th>month</th>" 
 	 		+ "<th>power consumption</th>"
@@ -94,7 +95,7 @@ public class Bill {
 	return output; 
 	}
 	
-	
+	//insertBill function for insert bill
 	public String insertBill(String acc_number, String name, String month, String power_consumption, String total_amount, String date){ 
 		
 		String output = ""; 
