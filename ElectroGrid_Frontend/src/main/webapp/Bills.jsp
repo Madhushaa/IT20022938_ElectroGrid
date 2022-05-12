@@ -42,7 +42,12 @@ pageEncoding="ISO-8859-1"%>
 			<div id="alertSuccess" class="alert alert-success"></div>
 			<div id="alertError" class="alert alert-danger"></div>
 			<br>
-			
+			<div id="divBillsGrid">
+				 <%
+				 Bill billObj = new Bill(); 
+				 out.print(billObj.readBills()); 
+				 %>
+			</div>
 			</div> </div> 
 		</div> 
 	</body>
