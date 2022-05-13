@@ -208,7 +208,7 @@ public class Bill {
 
 		}catch (Exception e){ 
 			
-			output = "{\"status\":\"error\",\"data\":\"Error while updating the item.\"}"; 
+			output = "{\"status\":\"error\",\"data\":\"Error while updating the Bill.\"}"; 
 			System.err.println(e.getMessage()); 
 			
 		} 
