@@ -31,13 +31,26 @@ public class BillsAPI extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		String power_consumption = request.getParameter("power_consumption");
+		double power_usage =Double.parseDouble(power_consumption);
+		Double amount = billObj.calculateAmount(power_usage);
+		//calculateAmount(power_consumption);
+		String output = billObj.insertBill(request.getParameter("acc_number"), 
+				 						   request.getParameter("name"), 
+				 						   request.getParameter("month"),
+										   request.getParameter("power_consumption"), 
+										   amount.toString(), 
+										   request.getParameter("date"));
+	    response.getWriter().write(output);
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
