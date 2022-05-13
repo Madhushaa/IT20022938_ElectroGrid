@@ -67,6 +67,15 @@ public class BillsAPI extends HttpServlet {
 		String power_consumption = paras.get("power_consumption").toString();
 		double power_usage =Double.parseDouble(power_consumption);
 		Double amount = billObj.calculateAmount(power_usage);
+		
+		String output = billObj.updateBill(paras.get("hidBillIDSave").toString(),  
+					paras.get("acc_number").toString(), 
+					paras.get("name").toString(), 
+					paras.get("month").toString(), 
+					paras.get("power_consumption").toString(), 
+					amount.toString(), 
+					paras.get("date").toString());
+		response.getWriter().write(output); 
 		 
 		
 		
