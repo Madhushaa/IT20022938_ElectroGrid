@@ -45,7 +45,7 @@ public class BillsAPI extends HttpServlet {
 		String power_consumption = request.getParameter("power_consumption");
 		double power_usage =Double.parseDouble(power_consumption);
 		Double amount = billObj.calculateAmount(power_usage);
-		//calculateAmount(power_consumption);
+		
 		String output = billObj.insertBill(request.getParameter("acc_number"), 
 				 						   request.getParameter("name"), 
 				 						   request.getParameter("month"),
@@ -69,17 +69,15 @@ public class BillsAPI extends HttpServlet {
 		Double amount = billObj.calculateAmount(power_usage);
 		
 		String output = billObj.updateBill(paras.get("hidBillIDSave").toString(),  
-					paras.get("acc_number").toString(), 
-					paras.get("name").toString(), 
-					paras.get("month").toString(), 
-					paras.get("power_consumption").toString(), 
-					amount.toString(), 
-					paras.get("date").toString());
-		response.getWriter().write(output); 
-		 
-		
-		
+										   paras.get("acc_number").toString(), 
+										   paras.get("name").toString(), 
+										   paras.get("month").toString(), 
+										   paras.get("power_consumption").toString(), 
+										   amount.toString(), 
+										   paras.get("date").toString());
+		response.getWriter().write(output);  		
 	}
+	
 
 	/**
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
@@ -88,34 +86,36 @@ public class BillsAPI extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		Map paras = getParasMap(request); 
-		 String output = billObj.deleteItem(paras.get("bill_id").toString()); 
+		String output = billObj.deleteItem(paras.get("bill_id").toString()); 
 		response.getWriter().write(output);
 		
 	}
 	
 	
 	// Convert request parameters to a Map
-	private static Map getParasMap(HttpServletRequest request) 
-	{ 
-	 Map<String, String> map = new HashMap<String, String>(); 
-	try
-	 { 
-	 Scanner scanner = new Scanner(request.getInputStream(), "UTF-8"); 
-	 String queryString = scanner.hasNext() ? 
-	 scanner.useDelimiter("\\A").next() : ""; 
-	 scanner.close(); 
-	 String[] params = queryString.split("&"); 
-	 for (String param : params) 
-	 {
-		 String[] p = param.split("=");
-		 map.put(p[0], p[1]); 
-		 } 
-		 } 
+	private static Map getParasMap(HttpServletRequest request) {
+		
+		Map<String, String> map = new HashMap<String, String>(); 
+		
+		try
+		{ 
+			 Scanner scanner = new Scanner(request.getInputStream(), "UTF-8"); 
+			 String queryString = scanner.hasNext() ? 
+			 scanner.useDelimiter("\\A").next() : ""; 
+			 scanner.close(); 
+			 String[] params = queryString.split("&"); 
+			 
+			 for (String param : params) 
+			 {
+				 String[] p = param.split("=");
+				 map.put(p[0], p[1]); 
+			 } 
+		 }
 		catch (Exception e) 
-		 { 
-		 } 
-		return map; 
+		{ 
+		} 
+		
+		return map;
+		
 		}
-
-
 }
