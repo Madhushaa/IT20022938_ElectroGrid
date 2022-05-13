@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/BillsAPI")
 public class BillsAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Bill billObj = new Bill();
        
     /**
      * @see HttpServlet#HttpServlet()
