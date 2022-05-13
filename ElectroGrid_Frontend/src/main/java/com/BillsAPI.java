@@ -62,6 +62,13 @@ public class BillsAPI extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
+		Map paras = getParasMap(request);
+		
+		String power_consumption = paras.get("power_consumption").toString();
+		double power_usage =Double.parseDouble(power_consumption);
+		Double amount = billObj.calculateAmount(power_usage);
+		 
+		
 		
 	}
 
