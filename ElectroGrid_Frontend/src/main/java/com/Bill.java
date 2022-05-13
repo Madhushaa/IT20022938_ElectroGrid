@@ -142,6 +142,38 @@ public class Bill {
 	
 	
 	
+	//method to calculate monthly total amount
+	public Double calculateAmount(Double usage) {
+		double total_amount;
+		double amount1;
+		double amount2;
+		double amount3;
+		double rate1 = 7;
+		double rate2 = 10;
+		
+		
+		if (usage <= 64 ) {
+			
+			total_amount = usage*rate1;	
+		}	
+			else if( 96 >= usage && usage> 64) {
+				amount1= 64*rate1;
+				amount2= (usage-64)*rate2;
+				total_amount = amount1+amount2   ;
+				
+			}
+				else {
+					amount1= 64*7;
+					amount2= 32*10;
+					amount3 = (usage-97)*20 ;
+					total_amount = amount1 + amount2 + amount3;
+				}
+		
+		return total_amount;
+	}
+	
+	
+	
 	//updateBill function for update bills
 	public String updateBill(String bill_id, String acc_number, String name, String month, String power_consumption,String total_amount, String date ){ 
 		
