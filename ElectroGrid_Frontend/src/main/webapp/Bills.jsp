@@ -22,8 +22,22 @@ pageEncoding="ISO-8859-1"%>
 				 <input id="name" name="name" type="text" 
 				 class="form-control form-control-sm">
 				 <br> Month: 
-				 <input id="month" name="month" type="text" 
+				 <select id="month" name="month" type="text" 
 				 class="form-control form-control-sm">
+				 <option value=""  > Select a Month</option>
+				 <option value="January" > January</option>
+				 <option value="February"> February</option>
+				 <option value="March"> March</option>
+				 <option value="April"> April</option>
+				 <option value="May"> May</option>
+				 <option value="June"> June</option>
+				 <option value="July"> July</option>
+				 <option value="August"> August</option>
+				 <option value="September"> September</option>
+				 <option value="October"> October</option>
+				 <option value="November"> November</option>
+				 <option value="December"> December</option>
+				 </select>
 				 <br> Power Consumption: 
 				 <input id="power_consumption" name="power_consumption" type="text" 
 				 class="form-control form-control-sm">
