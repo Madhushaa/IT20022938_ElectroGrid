@@ -217,8 +217,8 @@ public class Bill {
 	}
 	
 	
-	//deleteItem function for delete bills
-	public String deleteItem(String bill_id){ 
+	//deleteBill function for delete bills
+	public String deleteBill(String bill_id){ 
 		
 		String output = ""; 
 		

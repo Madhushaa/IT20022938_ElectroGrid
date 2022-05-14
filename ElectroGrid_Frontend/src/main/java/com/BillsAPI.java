@@ -86,7 +86,7 @@ public class BillsAPI extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		Map paras = getParasMap(request); 
-		String output = billObj.deleteItem(paras.get("bill_id").toString()); 
+		String output = billObj.deleteBill(paras.get("bill_id").toString()); 
 		response.getWriter().write(output);
 		
 	}

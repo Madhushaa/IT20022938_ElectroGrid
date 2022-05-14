@@ -9,12 +9,12 @@ pageEncoding="ISO-8859-1"%>
 		<title>Bill Management</title>
 		<link rel="stylesheet" href="Views/bootstrap.min.css">
 		<script src="Components/jquery-3.6.0.min.js"></script>
-		<script src="Components/items.js"></script>
+		<script src="Components/bills.js"></script>
 	</head>
 	<body> 
-		<div class="container"><div class="row"><div class="col-6"> 
-			<h1>Generate Bills</h1>
-			<form id="formItem" name="formItem" method="post" action="bills.jsp">
+		<div class="container"  ><div class="row" ><div class="col-6"> 
+			<h1 style="margin-left:122px"><b>Generate Bills</b></h1>
+			<form id="formBill" name="formBill" method="post" action="bills.jsp" >
 				 Account Number: 
 				 <input id="acc_number" name="acc_number" type="text" 
 				 class="form-control form-control-sm">
